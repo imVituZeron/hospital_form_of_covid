@@ -9,6 +9,12 @@
         int cep[8];
     };
 
+    struct datas{
+        unsigned int dia;
+        unsigned int mes;
+        int ano;
+    };
+
     struct agente{
         char nome[30];
         char usuario[40];
@@ -16,13 +22,13 @@
     };
 
     struct paciente{
-        char nome[30];
+        char nome[256];
         char email[40];
         int cpf[11];
         int telefone[11];
         char comorbidade[40];
-        char data_nasc[2];
-        int data_diag[2];
+        struct datas data_nasc;
+        struct datas data_diag;
         struct endereco endereco_paciente;
     };
 
@@ -72,25 +78,20 @@ int main(void){
                 scanf("%s", paciente.comorbidade);
                 printf(">--- Data Nascimento ---<\n");
                 printf("Dia: ");
-                scanf("%s", &paciente.data_nasc[0]);
-                setbuf(stdin, NULL);
+                scanf("%i", &paciente.data_nasc.dia);
                 printf("Mês: ");
-                scanf("%s", &paciente.data_nasc[1]);
-                setbuf(stdin, NULL);
+                scanf("%i", &paciente.data_nasc.mes);
                 printf("Ano: ");
-                scanf("%s", &paciente.data_nasc[2]);
-                setbuf(stdin, NULL);
+                scanf("%i", &paciente.data_nasc.ano);
                 printf("--------------------------\n");
                 printf(">--- Data Diagnostico ---<\n");
                 printf("Dia: ");
-                scanf("%i", &paciente.data_diag[0]);
-                setbuf(stdin, NULL);
+                scanf("%i", &paciente.data_diag.dia);
                 printf("Mês: ");
-                scanf("%i", &paciente.data_diag[1]);
-                setbuf(stdin, NULL);
+                scanf("%i", &paciente.data_diag.mes);
                 printf("Ano: ");
-                scanf("%i", &paciente.data_diag[2]);
-                setbuf(stdin, NULL);
+                scanf("%i", &paciente.data_diag.ano);
+                
                 printf("--------------------------\n");
                 cria_arquivo_paciente(paciente);
                 cria_arquivo_grupo_de_risco(paciente);
@@ -121,8 +122,8 @@ struct paciente cria_arquivo_paciente(struct paciente value){
 };
 
 struct paciente cria_arquivo_grupo_de_risco(struct paciente value){
-    int idade = 2022 - (int)value.data_nasc[2]; // esta com alguns erros
-    printf("nasc - %i\n", (int)value.data_nasc[2]); // esta com alguns erros
+    int idade = 2022 - value.data_nasc.ano; 
+    printf("nasc: %i | idade: %i\n", value.data_nasc.ano, idade); 
     printf("%s\n", value.comorbidade);
 
     if(value.comorbidade != "\0" && idade >= 65){

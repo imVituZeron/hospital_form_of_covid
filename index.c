@@ -6,7 +6,7 @@
         char cidade[25];
         char estado[2];
         int numero[4];
-        int cep[8];
+        unsigned int cep;
     };
 
     struct datas{
@@ -24,7 +24,7 @@
     struct paciente{
         char nome[256];
         char email[40];
-        int cpf[11];
+        unsigned int cpf;
         int telefone[11];
         char comorbidade[40];
         struct datas data_nasc;
@@ -71,7 +71,7 @@ int main(void){
                 printf("Email: ");
                 scanf("%s", paciente.email);
                 printf("CPF: ");
-                scanf("%i", paciente.cpf);
+                scanf("%i", &paciente.cpf);
                 printf("Telefone: ");
                 scanf("%i", paciente.telefone);
                 printf("comorbidade: ");
@@ -83,7 +83,6 @@ int main(void){
                 scanf("%i", &paciente.data_nasc.mes);
                 printf("Ano: ");
                 scanf("%i", &paciente.data_nasc.ano);
-                printf("--------------------------\n");
                 printf(">--- Data Diagnostico ---<\n");
                 printf("Dia: ");
                 scanf("%i", &paciente.data_diag.dia);
@@ -91,8 +90,20 @@ int main(void){
                 scanf("%i", &paciente.data_diag.mes);
                 printf("Ano: ");
                 scanf("%i", &paciente.data_diag.ano);
-                
-                printf("--------------------------\n");
+                printf(">--- Endereço ---<\n");
+                printf("Rua: ");
+                scanf("%s", paciente.endereco_paciente.rua);
+                printf("Bairro: ");
+                scanf("%s", paciente.endereco_paciente.bairro);
+                printf("Cidade: ");
+                scanf("%s", paciente.endereco_paciente.cidade);
+                printf("Estado [SP/MG/RJ]: ");
+                scanf("%s", paciente.endereco_paciente.estado);
+                printf("Número: ");
+                scanf("%i", paciente.endereco_paciente.numero);
+                printf("CEP: ");
+                scanf("%i", &paciente.endereco_paciente.cep);
+
                 cria_arquivo_paciente(paciente);
                 cria_arquivo_grupo_de_risco(paciente);
                 
@@ -116,20 +127,30 @@ int main(void){
 }
 
 struct paciente cria_arquivo_paciente(struct paciente value){
-    printf("prototipo - cadastro paciente\n");
+    printf("> ---- Cadastro de Paciente completo.");
 
     return value;
 };
 
 struct paciente cria_arquivo_grupo_de_risco(struct paciente value){
     int idade = 2022 - value.data_nasc.ano; 
-    printf("nasc: %i | idade: %i\n", value.data_nasc.ano, idade); 
-    printf("%s\n", value.comorbidade);
 
     if(value.comorbidade != "\0" && idade >= 65){
-        printf("vai ser criado o arquivo deste paciente por ser do grupo de risco!\n");
+        printf(">----------------------------<\n");
+        printf("Paciente do Grupo de Risco!\n");
+        printf("Idade: %i\n", idade);
+        printf("Contem comorbidades: %s\n", value.comorbidade);
+        printf(">----------------------------<\n");
+
+        FILE *file;
+        file = fopen("./databases/grupo_de_risco/paciente_1.txt","w");
+            fprintf(file, "Nome: %s\n",value.nome);
+            fprintf(file, "CPF: %d\n",value.cpf);
+            fprintf(file, "CEP: %i\n",value.endereco_paciente.cep);
+            fprintf(file, "Comorbidade: %s\n",value.comorbidade);
+        fclose(file);
     }else{
-        printf("saindo da função grupo_de_risco\n");
+        printf("Paciente NÃO faz parte do Grupo de Risco!\n");
     }
 
     return value;

@@ -1,0 +1,4 @@
+Nome: vitor
+CPF: 321654
+CEP: 12635666
+Comorbidade: tuberculose

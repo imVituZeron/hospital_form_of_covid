@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
     struct endereco{
         char rua[30];
@@ -127,7 +128,7 @@ int main(void){
 }
 
 struct paciente cria_arquivo_paciente(struct paciente value){
-    printf("> ---- Cadastro de Paciente completo.");
+    printf("> ---- Cadastro de Paciente completo.\n");
 
     return value;
 };
@@ -143,7 +144,13 @@ struct paciente cria_arquivo_grupo_de_risco(struct paciente value){
         printf(">----------------------------<\n");
 
         FILE *file;
-        file = fopen("./databases/grupo_de_risco/paciente_1.txt","w");
+        // gambiarra pra criar o arquivo com o nome do paciente
+        char nome_do_arquivo[256] = "./databases/grupo_de_risco/";
+        char txt[256] = ".txt";
+        strcat(nome_do_arquivo, value.nome);
+        strcat(nome_do_arquivo, txt);
+
+        file = fopen(nome_do_arquivo,"w");
             fprintf(file, "Nome: %s\n",value.nome);
             fprintf(file, "CPF: %d\n",value.cpf);
             fprintf(file, "CEP: %i\n",value.endereco_paciente.cep);

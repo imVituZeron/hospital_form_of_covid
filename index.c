@@ -6,7 +6,7 @@
         char bairro[25];
         char cidade[25];
         char estado[2];
-        int numero[4];
+        int numero;
         unsigned int cep;
     };
 
@@ -101,7 +101,7 @@ int main(void){
                 printf("Estado [SP/MG/RJ]: ");
                 scanf("%s", paciente.endereco_paciente.estado);
                 printf("Número: ");
-                scanf("%i", paciente.endereco_paciente.numero);
+                scanf("%i", &paciente.endereco_paciente.numero);
                 printf("CEP: ");
                 scanf("%i", &paciente.endereco_paciente.cep);
 
@@ -113,7 +113,6 @@ int main(void){
                 printf("ESTÁ AQUI!");
                 break;
             }
-            
             
         }else if(opcao == 2){
             printf("Até a proxima!\n");
@@ -128,6 +127,25 @@ int main(void){
 }
 
 struct paciente cria_arquivo_paciente(struct paciente value){
+    FILE *file;
+    // gambiarra para criar o arquivo com o nome do paciente
+    char nome_do_arquivo[256] = "./databases/pacientes/";
+    char txt[256] = ".txt";
+    strcat(nome_do_arquivo, value.nome);
+    strcat(nome_do_arquivo, txt);
+
+    file = fopen(nome_do_arquivo, "w");
+        fprintf(file,"Nome: %s\n", value.nome);
+        fprintf(file,"Email: %s\n", value.email);
+        fprintf(file,"Cpf: %i\n", value.cpf);
+        fprintf(file,"Telefone: %n\n", value.telefone);
+        fprintf(file,"Comorbidade: %s\n", value.comorbidade);
+        fprintf(file,"Data de Nasc: %i/%i/%i\n", value.data_nasc.dia, value.data_nasc.mes, value.data_nasc.ano);
+        fprintf(file,"Data de Diag: %i/%i/%i\n", value.data_diag.dia, value.data_diag.mes, value.data_diag.ano);
+        fprintf(file,"Rua/Número/Bairro: %s - nº%i - %s\n", value.endereco_paciente.rua, value.endereco_paciente.numero, value.endereco_paciente.bairro);
+        fprintf(file,"cidade/Estado: %s - %s\n", value.endereco_paciente.cidade, value.endereco_paciente.estado);
+        fprintf(file,"CEP: %i\n", value.endereco_paciente.cep);
+    fclose(file);
     printf("> ---- Cadastro de Paciente completo.\n");
 
     return value;
@@ -144,7 +162,7 @@ struct paciente cria_arquivo_grupo_de_risco(struct paciente value){
         printf(">----------------------------<\n");
 
         FILE *file;
-        // gambiarra pra criar o arquivo com o nome do paciente
+        // gambiarra para criar o arquivo com o nome do paciente
         char nome_do_arquivo[256] = "./databases/grupo_de_risco/";
         char txt[256] = ".txt";
         strcat(nome_do_arquivo, value.nome);

@@ -1,0 +1,10 @@
+Nome: Leandro
+Email: leandrobsantos
+Cpf: 321654
+Telefone: 
+Comorbidade: não
+Data de Nasc: 27/1/1979
+Data de Diag: 2/11/2022
+Rua/Número/Bairro: josepatesdossantos - nº449 - mariaburraco
+cidade/Estado: sjrppppp - SP
+CEP: 12375066

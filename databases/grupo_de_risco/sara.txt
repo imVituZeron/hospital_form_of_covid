@@ -1,0 +1,4 @@
+Nome: sara
+CPF: 321
+CEP: 13780251
+Comorbidade: tuberculoses

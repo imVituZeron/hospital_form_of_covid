@@ -1,0 +1,10 @@
+Nome: SaraLeuterio
+Email: sara@gmail.com
+Cpf: 321654
+Telefone: 
+Comorbidade: diabetes
+Data de Nasc: 17/2/2002
+Data de Diag: 2/11/2022
+Rua/Número/Bairro: piriripororo - nº - centro
+cidade/Estado: sjBV - SP
+CEP: 12750280

@@ -36,6 +36,7 @@
     // prototipando as funções com estruturas
     struct paciente cria_arquivo_paciente(struct paciente value);
     struct paciente cria_arquivo_grupo_de_risco(struct paciente value);
+    struct agente verificar_agente(struct agente value);
 
 int main(void){
     struct paciente paciente;
@@ -52,11 +53,13 @@ int main(void){
     while(true){
         if(opcao == 1){
             printf("--- LOGIN ---\n");
+            printf("Nome: ");
+            scanf("%s", agente.nome);
             printf("Usuário: ");
             scanf("%s", agente.usuario);
             printf("Senha: ");
             scanf("%s", agente.senha);
-            printf("%s ; %s\n", agente.usuario, agente.senha);
+            verificar_agente(agente);
 
             printf("-------------\n");
             printf(" Cadastrar paciente - 1\n");
@@ -108,9 +111,19 @@ int main(void){
                 cria_arquivo_paciente(paciente);
                 cria_arquivo_grupo_de_risco(paciente);
                 
-                break;
+                printf("-------------\n");
+                char mais_um;
+                printf("Deseja cadastrar mais algum paciente[S/N]: ");
+                scanf("%c", &mais_um);
+                printf("-------------\n");
+                if(mais_um == 'S'){
+                    opcao_d_login = 1;
+                }else if(mais_um == 'N'){
+                    opcao_d_login = 2;
+                }
+                
             }else if(opcao_d_login == 2){
-                printf("ESTÁ AQUI!");
+                printf("Até a proxima!\n");
                 break;
             }
             
@@ -180,3 +193,24 @@ struct paciente cria_arquivo_grupo_de_risco(struct paciente value){
 
     return value;
 }
+struct agente verificar_agente(struct agente value){
+    FILE *file;
+
+    char nome_do_arquivo[256] = "./databases/agentes/";
+    char txt[256] = ".txt";
+    strcat(nome_do_arquivo, value.nome);
+    strcat(nome_do_arquivo, txt);
+
+    file = fopen(nome_do_arquivo, "r");
+        if(file == NULL){
+            printf("Agente não cadastrado!");
+        }
+
+        char frases[100];
+        while(fgets(frases,100,file) != NULL){
+            printf("1 - %s\n", frases);
+        }
+    fclose(file);
+
+    return value;
+};

@@ -1,0 +1,10 @@
+Nome: jaja
+Email: jaj.com
+Cpf: 321654
+Telefone: 
+Comorbidade: não
+Data de Nasc: 19/10/2000
+Data de Diag: 4/11/2022
+Rua/Número/Bairro: jaj - nº564 - jajajaj
+cidade/Estado: j - SP
+CEP: 65431

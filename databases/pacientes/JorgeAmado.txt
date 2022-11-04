@@ -1,0 +1,10 @@
+Nome: JorgeAmado
+Email: jorg@hotmail.com
+Cpf: 321654
+Telefone: 
+Comorbidade: Tuberculosw
+Data de Nasc: 5/3/1965
+Data de Diag: 4/11/2022
+Rua/Número/Bairro: pedrinha - nº0 - pedrona
+cidade/Estado: sjrp - MG
+CEP: 12333000

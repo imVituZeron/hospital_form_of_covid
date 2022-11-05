@@ -24,6 +24,7 @@
 
     struct paciente{
         char nome[256];
+        char sobrenome[256];
         char email[40];
         unsigned int cpf;
         int telefone[11];
@@ -36,13 +37,15 @@
     // prototipando as funções com estruturas
     struct paciente cria_arquivo_paciente(struct paciente value);
     struct paciente cria_arquivo_grupo_de_risco(struct paciente value);
-    struct agente verificar_agente(struct agente value);
+    // struct agente verificar_agente(struct agente value);
+    int verificar_agente(struct agente value);
 
 int main(void){
     struct paciente paciente;
     struct agente agente;
     int opcao, opcao_d_login;
-
+    int mais_um;
+    
     printf("-------------\n");
     printf(" Login - 1\n");
     printf(" Sair - 2\n");
@@ -59,19 +62,26 @@ int main(void){
             scanf("%s", agente.usuario);
             printf("Senha: ");
             scanf("%s", agente.senha);
-            verificar_agente(agente);
+            if(verificar_agente(agente) == 1){
+                printf("Tente novamente!");
+                break;
+            }
 
-            printf("-------------\n");
-            printf(" Cadastrar paciente - 1\n");
-            printf(" Sair - 2\n");
-            printf("-------------\n");
+            printf("-----------------------\n");
+            printf(" 1 - Cadastrar paciente\n");
+            printf(" 2 - Sair\n");
+            printf("-----------------------\n");
             printf("Digite sua opção: ");
             scanf("%i", &opcao_d_login);
 
             if(opcao_d_login == 1){
+                char caractere;
+                int i = 0;
                 printf("--- CADASTRO DO PACIENTE ---\n");
-                printf("Nome: ");
+                printf("Primeiro nome: ");
                 scanf("%s", paciente.nome);
+                printf("Sobrenome: ");
+                scanf("%s", paciente.sobrenome);
                 printf("Email: ");
                 scanf("%s", paciente.email);
                 printf("CPF: ");
@@ -110,20 +120,13 @@ int main(void){
 
                 cria_arquivo_paciente(paciente);
                 cria_arquivo_grupo_de_risco(paciente);
-                
-                printf("-------------\n");
-                char mais_um;
-                printf("Deseja cadastrar mais algum paciente[S/N]: ");
-                scanf("%c", &mais_um);
-                printf("-------------\n");
-                if(mais_um == 'S'){
-                    opcao_d_login = 1;
-                }else if(mais_um == 'N'){
-                    opcao_d_login = 2;
-                }
+                break;
                 
             }else if(opcao_d_login == 2){
                 printf("Até a proxima!\n");
+                break;
+            }else{
+                printf("Informação invalida!\n");
                 break;
             }
             
@@ -135,7 +138,6 @@ int main(void){
             break;
         }
     }
-    
     return 0;
 }
 
@@ -148,7 +150,7 @@ struct paciente cria_arquivo_paciente(struct paciente value){
     strcat(nome_do_arquivo, txt);
 
     file = fopen(nome_do_arquivo, "w");
-        fprintf(file,"Nome: %s\n", value.nome);
+        fprintf(file,"Nome: %s %s\n", value.nome, value.sobrenome);
         fprintf(file,"Email: %s\n", value.email);
         fprintf(file,"Cpf: %i\n", value.cpf);
         fprintf(file,"Telefone: %n\n", value.telefone);
@@ -193,7 +195,7 @@ struct paciente cria_arquivo_grupo_de_risco(struct paciente value){
 
     return value;
 }
-struct agente verificar_agente(struct agente value){
+int verificar_agente(struct agente value){
     FILE *file;
 
     char nome_do_arquivo[256] = "./databases/agentes/";
@@ -207,10 +209,12 @@ struct agente verificar_agente(struct agente value){
         }
 
         char frases[100];
+        int i = 0;
         while(fgets(frases,100,file) != NULL){
-            printf("1 - %s\n", frases);
+            printf("%i - %s\n", i, frases);
+            i++;
         }
     fclose(file);
 
-    return value;
+    return 0;
 };

@@ -1,0 +1,10 @@
+Nome: Jão Santos
+Email: jãosantos@GMAIL.COM
+Cpf: 321654
+Telefone: 
+Comorbidade: tuberculose
+Data de Nasc: 54/12/2000
+Data de Diag: 4/11/2022
+Rua/Número/Bairro: jorge - nº2 - amado
+cidade/Estado: batista - MG
+CEP: 32154

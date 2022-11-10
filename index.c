@@ -53,89 +53,80 @@ int main(void){
     printf("Digite sua opção: ");
     scanf("%i", &opcao);
 
-    while(true){
-        if(opcao == 1){
-            printf("--- LOGIN ---\n");
-            printf("Nome: ");
-            scanf("%s", agente.nome);
-            printf("Usuário: ");
-            scanf("%s", agente.usuario);
-            printf("Senha: ");
-            scanf("%s", agente.senha);
-            if(verificar_agente(agente) == 1){
-                printf("Tente novamente!\n");
+    while(opcao == 1){
+        printf("--- LOGIN ---\n");
+        printf("Nome: ");
+        scanf("%s", agente.nome);
+        printf("Usuário: ");
+        scanf("%s", agente.usuario);
+        printf("Senha: ");
+        scanf("%s", agente.senha);
+        if(verificar_agente(agente) == 1){
+            printf("Tente novamente!\n");
+            break;
+        }else if(verificar_agente(agente) == 0){
+            printf("-----------------------\n");
+            printf(" 1 - Cadastrar paciente\n");
+            printf(" 2 - Sair\n");
+            printf("-----------------------\n");
+            printf("Digite sua opção: ");
+            scanf("%i", &opcao_d_login);
+
+            if(opcao_d_login == 1){
+                char caractere;
+                int i = 0;
+                printf("--- CADASTRO DO PACIENTE ---\n");
+                printf("Primeiro nome: ");
+                scanf("%s", paciente.nome);
+                printf("Sobrenome: ");
+                scanf("%s", paciente.sobrenome);
+                printf("Email: ");
+                scanf("%s", paciente.email);
+                printf("CPF: ");
+                scanf("%i", &paciente.cpf);
+                printf("Telefone: ");
+                scanf("%i", paciente.telefone);
+                printf("comorbidade: ");
+                scanf("%s", paciente.comorbidade);
+                printf(">--- Data Nascimento ---<\n");
+                printf("Dia: ");
+                scanf("%i", &paciente.data_nasc.dia);
+                printf("Mês: ");
+                scanf("%i", &paciente.data_nasc.mes);
+                printf("Ano: ");
+                scanf("%i", &paciente.data_nasc.ano);
+                printf(">--- Data Diagnostico ---<\n");
+                printf("Dia: ");
+                scanf("%i", &paciente.data_diag.dia);
+                printf("Mês: ");
+                scanf("%i", &paciente.data_diag.mes);
+                printf("Ano: ");
+                scanf("%i", &paciente.data_diag.ano);
+                printf(">--- Endereço ---<\n");
+                printf("Rua: ");
+                scanf("%s", paciente.endereco_paciente.rua);
+                printf("Bairro: ");
+                scanf("%s", paciente.endereco_paciente.bairro);
+                printf("Cidade: ");
+                scanf("%s", paciente.endereco_paciente.cidade);
+                printf("Estado [SP/MG/RJ]: ");
+                scanf("%s", paciente.endereco_paciente.estado);
+                printf("Número: ");
+                scanf("%i", &paciente.endereco_paciente.numero);
+                printf("CEP: ");
+                scanf("%i", &paciente.endereco_paciente.cep);
+
+                cria_arquivo_paciente(paciente);
+                cria_arquivo_grupo_de_risco(paciente);
                 break;
-            }else if(verificar_agente(agente) == 0){
-                printf("-----------------------\n");
-                printf(" 1 - Cadastrar paciente\n");
-                printf(" 2 - Sair\n");
-                printf("-----------------------\n");
-                printf("Digite sua opção: ");
-                scanf("%i", &opcao_d_login);
-
-                if(opcao_d_login == 1){
-                    char caractere;
-                    int i = 0;
-                    printf("--- CADASTRO DO PACIENTE ---\n");
-                    printf("Primeiro nome: ");
-                    scanf("%s", paciente.nome);
-                    printf("Sobrenome: ");
-                    scanf("%s", paciente.sobrenome);
-                    printf("Email: ");
-                    scanf("%s", paciente.email);
-                    printf("CPF: ");
-                    scanf("%i", &paciente.cpf);
-                    printf("Telefone: ");
-                    scanf("%i", paciente.telefone);
-                    printf("comorbidade: ");
-                    scanf("%s", paciente.comorbidade);
-                    printf(">--- Data Nascimento ---<\n");
-                    printf("Dia: ");
-                    scanf("%i", &paciente.data_nasc.dia);
-                    printf("Mês: ");
-                    scanf("%i", &paciente.data_nasc.mes);
-                    printf("Ano: ");
-                    scanf("%i", &paciente.data_nasc.ano);
-                    printf(">--- Data Diagnostico ---<\n");
-                    printf("Dia: ");
-                    scanf("%i", &paciente.data_diag.dia);
-                    printf("Mês: ");
-                    scanf("%i", &paciente.data_diag.mes);
-                    printf("Ano: ");
-                    scanf("%i", &paciente.data_diag.ano);
-                    printf(">--- Endereço ---<\n");
-                    printf("Rua: ");
-                    scanf("%s", paciente.endereco_paciente.rua);
-                    printf("Bairro: ");
-                    scanf("%s", paciente.endereco_paciente.bairro);
-                    printf("Cidade: ");
-                    scanf("%s", paciente.endereco_paciente.cidade);
-                    printf("Estado [SP/MG/RJ]: ");
-                    scanf("%s", paciente.endereco_paciente.estado);
-                    printf("Número: ");
-                    scanf("%i", &paciente.endereco_paciente.numero);
-                    printf("CEP: ");
-                    scanf("%i", &paciente.endereco_paciente.cep);
-
-                    cria_arquivo_paciente(paciente);
-                    cria_arquivo_grupo_de_risco(paciente);
-                    break;
                 
-                }else if(opcao_d_login == 2){
-                    printf("Até a proxima!\n");
-                    break;
-                }else{
-                    printf("Informação invalida!\n");
-                    break;
-                }
+            }else if(opcao_d_login == 2){
+                printf("Até a proxima!\n");
+                break;
+            }else{
+                printf("Informação invalida!\n");
+                break;
             }
-
-        }else if(opcao == 2){
-            printf("Até a proxima!\n");
-            break;
-        }else{
-            printf("Informação invalida!\n");
-            break;
         }
     }
     return 0;
@@ -194,7 +185,8 @@ struct paciente cria_arquivo_grupo_de_risco(struct paciente value){
     }
 
     return value;
-}
+};
+
 int verificar_agente(struct agente value){
     FILE *file;
 
@@ -214,7 +206,6 @@ int verificar_agente(struct agente value){
             printf("%i - %s\n", i, frases);
             if(i == 1){
                 if(*frases != *value.usuario){
-                    printf("%s = %s", frases, value.usuario);
                     printf("Usuário incorreto!\n");
                     return 1;
                 }

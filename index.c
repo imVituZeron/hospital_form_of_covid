@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
     struct endereco{
         char rua[30];
@@ -34,17 +35,15 @@
         struct endereco endereco_paciente;
     };
 
-    // prototipando as funções com estruturas
     struct paciente cria_arquivo_paciente(struct paciente value);
     struct paciente cria_arquivo_grupo_de_risco(struct paciente value);
-    // struct agente verificar_agente(struct agente value);
     int verificar_agente(struct agente value);
 
 int main(void){
     struct paciente paciente;
     struct agente agente;
-    int opcao, opcao_d_login;
-    int mais_um;
+    int opcao, opcao_d_login, result;
+    char mais_um;
     
     printf("-------------\n");
     printf(" Login - 1\n");
@@ -53,7 +52,8 @@ int main(void){
     printf("Digite sua opção: ");
     scanf("%i", &opcao);
 
-    while(opcao == 1){
+    switch (opcao){
+    case 1:
         printf("--- LOGIN ---\n");
         printf("Nome: ");
         scanf("%s", agente.nome);
@@ -61,20 +61,17 @@ int main(void){
         scanf("%s", agente.usuario);
         printf("Senha: ");
         scanf("%s", agente.senha);
-        if(verificar_agente(agente) == 1){
-            printf("Tente novamente!\n");
-            break;
-        }else if(verificar_agente(agente) == 0){
+        result = verificar_agente(agente);
+        switch (result){
+        case 0:
             printf("-----------------------\n");
             printf(" 1 - Cadastrar paciente\n");
             printf(" 2 - Sair\n");
             printf("-----------------------\n");
             printf("Digite sua opção: ");
             scanf("%i", &opcao_d_login);
-
-            if(opcao_d_login == 1){
-                char caractere;
-                int i = 0;
+            switch (opcao_d_login){
+            case 1:
                 printf("--- CADASTRO DO PACIENTE ---\n");
                 printf("Primeiro nome: ");
                 scanf("%s", paciente.nome);
@@ -118,17 +115,39 @@ int main(void){
 
                 cria_arquivo_paciente(paciente);
                 cria_arquivo_grupo_de_risco(paciente);
-                break;
-                
-            }else if(opcao_d_login == 2){
+
+                printf("Deseja Cadastrar mais alguma paciente[S/N]?");
+                scanf("%c", &mais_um);
+                if(mais_um == 'S'){
+                    opcao_d_login = 1;
+                }else if(mais_um == 'N'){
+                    printf("Paciente cadastrado com sucesso!");
+                    break;
+                }
+            case 2:
                 printf("Até a proxima!\n");
                 break;
-            }else{
+            default:
                 printf("Informação invalida!\n");
                 break;
             }
+            break;
+        case 1:
+            printf("Tente novamente!\n");
+            result = 1;
+        default:
+            printf("Informação invalida!\n");
+            break;
         }
+        break;
+    case 2:
+        printf("Até a proxima!\n");
+        break;
+    default:
+        printf("Informação invalida!\n");
+        break;
     }
+
     return 0;
 }
 

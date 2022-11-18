@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <stdio_ext.h>
 
     struct endereco{
-        char rua[30];
-        char bairro[25];
-        char cidade[25];
+        char rua[256];
+        char bairro[256];
+        char cidade[256];
         char estado[2];
         int numero;
         unsigned int cep;
@@ -25,11 +26,10 @@
 
     struct paciente{
         char nome[256];
-        char sobrenome[256];
-        char email[40];
+        char email[256];
         unsigned int cpf;
         int telefone[11];
-        char comorbidade[40];
+        char comorbidade[256];
         struct datas data_nasc;
         struct datas data_diag;
         struct endereco endereco_paciente;
@@ -38,53 +38,57 @@
     struct paciente cria_arquivo_paciente(struct paciente value);
     struct paciente cria_arquivo_grupo_de_risco(struct paciente value);
     int verificar_agente(struct agente value);
-
+    void __fpurge(FILE *stream);
+    void pegar_entrada(char *buff);
+    
 int main(void){
     struct paciente paciente;
     struct agente agente;
     int opcao, opcao_d_login, result;
-    char mais_um;
+    char mais_um[1];
     
     printf("-------------\n");
-    printf(" Login - 1\n");
-    printf(" Sair - 2\n");
+    printf(" 1 - Login\n");
+    printf(" 2 - Sair\n");
     printf("-------------\n");
     printf("Digite sua opção: ");
     scanf("%i", &opcao);
 
-    switch (opcao){
+    switch(opcao){
     case 1:
+        system("clear"); // trocar esse comando quando for fazer a parte para o Windows
         printf("--- LOGIN ---\n");
         printf("Nome: ");
-        scanf("%s", agente.nome);
+        pegar_entrada(agente.nome);
         printf("Usuário: ");
-        scanf("%s", agente.usuario);
+        pegar_entrada(agente.usuario);
         printf("Senha: ");
-        scanf("%s", agente.senha);
+        pegar_entrada(agente.senha);
         result = verificar_agente(agente);
+
         switch (result){
         case 0:
+            system("clear");
             printf("-----------------------\n");
             printf(" 1 - Cadastrar paciente\n");
             printf(" 2 - Sair\n");
             printf("-----------------------\n");
             printf("Digite sua opção: ");
             scanf("%i", &opcao_d_login);
-            switch (opcao_d_login){
-            case 1:
+
+            do{
+                system("clear");
                 printf("--- CADASTRO DO PACIENTE ---\n");
-                printf("Primeiro nome: ");
-                scanf("%s", paciente.nome);
-                printf("Sobrenome: ");
-                scanf("%s", paciente.sobrenome);
+                printf("Nome: ");
+                pegar_entrada(paciente.nome);
                 printf("Email: ");
-                scanf("%s", paciente.email);
+                pegar_entrada(paciente.email);
                 printf("CPF: ");
                 scanf("%i", &paciente.cpf);
                 printf("Telefone: ");
                 scanf("%i", paciente.telefone);
                 printf("comorbidade: ");
-                scanf("%s", paciente.comorbidade);
+                pegar_entrada(paciente.comorbidade);
                 printf(">--- Data Nascimento ---<\n");
                 printf("Dia: ");
                 scanf("%i", &paciente.data_nasc.dia);
@@ -101,13 +105,13 @@ int main(void){
                 scanf("%i", &paciente.data_diag.ano);
                 printf(">--- Endereço ---<\n");
                 printf("Rua: ");
-                scanf("%s", paciente.endereco_paciente.rua);
+                pegar_entrada(paciente.endereco_paciente.rua);
                 printf("Bairro: ");
-                scanf("%s", paciente.endereco_paciente.bairro);
+                pegar_entrada(paciente.endereco_paciente.bairro);
                 printf("Cidade: ");
-                scanf("%s", paciente.endereco_paciente.cidade);
+                pegar_entrada(paciente.endereco_paciente.cidade);
                 printf("Estado [SP/MG/RJ]: ");
-                scanf("%s", paciente.endereco_paciente.estado);
+                pegar_entrada(paciente.endereco_paciente.estado);
                 printf("Número: ");
                 scanf("%i", &paciente.endereco_paciente.numero);
                 printf("CEP: ");
@@ -117,24 +121,19 @@ int main(void){
                 cria_arquivo_grupo_de_risco(paciente);
 
                 printf("Deseja Cadastrar mais alguma paciente[S/N]?");
-                scanf("%c", &mais_um);
-                if(mais_um == 'S'){
+                pegar_entrada(mais_um);
+                if(mais_um == "S"){
+                    printf("Paciente anterior cadastrado com sucesso!");
                     opcao_d_login = 1;
-                }else if(mais_um == 'N'){
+                }else if(mais_um == "N"){
                     printf("Paciente cadastrado com sucesso!");
+                    opcao_d_login = 2;
                     break;
                 }
-            case 2:
-                printf("Até a proxima!\n");
-                break;
-            default:
-                printf("Informação invalida!\n");
-                break;
-            }
-            break;
+            }while(opcao_d_login == 1);
         case 1:
-            printf("Tente novamente!\n");
-            result = 1;
+            printf("Execute o programa e tente novamente!\n");
+            break;
         default:
             printf("Informação invalida!\n");
             break;
@@ -160,7 +159,7 @@ struct paciente cria_arquivo_paciente(struct paciente value){
     strcat(nome_do_arquivo, txt);
 
     file = fopen(nome_do_arquivo, "w");
-        fprintf(file,"Nome: %s %s\n", value.nome, value.sobrenome);
+        fprintf(file,"Nome: %s\n", value.nome);
         fprintf(file,"Email: %s\n", value.email);
         fprintf(file,"Cpf: %i\n", value.cpf);
         fprintf(file,"Telefone: %n\n", value.telefone);
@@ -213,7 +212,8 @@ int verificar_agente(struct agente value){
     char txt[256] = ".txt";
     strcat(nome_do_arquivo, value.nome);
     strcat(nome_do_arquivo, txt);
-
+    
+    printf("-------- %s", nome_do_arquivo);
     file = fopen(nome_do_arquivo, "r");
         if(file == NULL){
             printf("Agente não cadastrado!");
@@ -239,4 +239,15 @@ int verificar_agente(struct agente value){
     fclose(file);
 
     return 0;
+};
+
+void pegar_entrada(char *buff){
+    // função para pegar os inputs corretamentes
+    int len;
+    __fpurge(stdin);
+    fgets(buff, sizeof(buff), stdin);
+
+    len = strlen(buff);
+    if(buff[len - 1] == '\n')
+        buff[--len] = '\0';
 };

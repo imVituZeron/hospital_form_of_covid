@@ -44,8 +44,7 @@
 int main(void){
     struct paciente paciente;
     struct agente agente;
-    int opcao, opcao_d_login, result;
-    char mais_um[1];
+    int opcao, opcao_d_login, result, mais_um;
     
     printf("-------------\n");
     printf(" 1 - Login\n");
@@ -120,16 +119,24 @@ int main(void){
                 cria_arquivo_paciente(paciente);
                 cria_arquivo_grupo_de_risco(paciente);
 
-                printf("Deseja Cadastrar mais alguma paciente[S/N]?");
-                pegar_entrada(mais_um);
-                if(mais_um == "S"){
-                    printf("Paciente anterior cadastrado com sucesso!");
+                system("clear");
+                printf("Deseja Cadastrar mais alguma paciente?\n");
+                printf("---------------\n");
+                printf(" 1 - Sim\n");
+                printf(" 0 - Não\n");
+                printf("---------------\n");
+                printf("Digite sua opção: ");
+                scanf("%i", &mais_um);
+
+                if(mais_um == 1){
+                    printf("Paciente anterior cadastrado com sucesso!\n");
                     opcao_d_login = 1;
-                }else if(mais_um == "N"){
-                    printf("Paciente cadastrado com sucesso!");
+                }else if(mais_um == 0){
+                    printf("Paciente cadastrado com sucesso!\n");
                     opcao_d_login = 2;
                     break;
                 }
+
             }while(opcao_d_login == 1);
         case 1:
             printf("Execute o programa e tente novamente!\n");

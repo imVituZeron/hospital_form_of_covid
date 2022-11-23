@@ -1,0 +1,10 @@
+Nome: Adriano
+Email: acriano
+Cpf: 20504
+Telefone: 
+Comorbidade: tecnolo
+Data de Nasc: 1685382480/4/1828540
+Data de Diag: 0/1828540/0
+Rua/Número/Bairro: rua do  - nº256 - canalte
+cidade/Estado: canalte - Sp
+CEP: 131415

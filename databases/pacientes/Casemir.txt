@@ -1,0 +1,10 @@
+Nome: Casemir
+Email: casetv@
+Cpf: 0
+Telefone: 
+Comorbidade: diabeti
+Data de Nasc: 0/0/955197795
+Data de Diag: 32732/1/22048
+Rua/Número/Bairro: case da - nº1000 - twich
+cidade/Estado: são pa - sp
+CEP: 321654

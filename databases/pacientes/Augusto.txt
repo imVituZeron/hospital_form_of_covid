@@ -1,0 +1,10 @@
+Nome: Augusto
+Email: augusto
+Cpf: 3216543
+Telefone: 1932566
+Comorbidade: 
+Data de Nasc: 3101/1/1940
+Data de Diag: 2211/11/2022
+Rua/Número/Bairro: augusto - nº654 - pates d
+cidade/Estado: São be - Sp
+CEP: 32165477

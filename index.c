@@ -76,7 +76,7 @@ int main(void){
             printf("Digite sua opção: ");
             scanf("%i", &opcao_d_login);
 
-            do{
+            while(opcao_d_login == 1){
                 system("clear");
                 printf("--- CADASTRO DO PACIENTE ---\n");
                 printf("Nome: ");
@@ -135,9 +135,14 @@ int main(void){
                     cria_arquivo_grupo_de_risco(paciente);
                     opcao_d_login = 2;
                     break;
+                }else{
+                    cria_arquivo_paciente(paciente);
+                    cria_arquivo_grupo_de_risco(paciente);
+                    printf("Opção invalida!");
                 }
 
-            }while(opcao_d_login == 1);
+            }
+            break;
         case 1:
             printf("Execute o programa e tente novamente!\n");
             break;
@@ -170,7 +175,11 @@ struct paciente cria_arquivo_paciente(struct paciente value){
         fprintf(file,"Email: %s\n", value.email);
         fprintf(file,"Cpf: %s\n", value.cpf);
         fprintf(file,"Telefone: %s\n", value.telefone);
-        fprintf(file,"Comorbidade: %s\n", value.comorbidade);
+        if(value.comorbidade == "\0"){
+            fprintf(file,"Comorbidade: Não tem!\n");
+        }else{
+            fprintf(file,"Comorbidade: %s\n", value.comorbidade);
+        }
         fprintf(file,"Data de Nasc: %i/%i/%i\n", cast_array_para_int(value.data_nasc.dia, 'd'), cast_array_para_int(value.data_nasc.mes, 'm'), value.data_nasc.ano);
         fprintf(file,"Data de Diag: %i/%i/%i\n", cast_array_para_int(value.data_diag.dia, 'd'), cast_array_para_int(value.data_diag.mes, 'm'), value.data_diag.ano);
         fprintf(file,"Rua/Número/Bairro: %s - nº%i - %s\n", value.endereco_paciente.rua, value.endereco_paciente.numero, value.endereco_paciente.bairro);
@@ -189,7 +198,11 @@ struct paciente cria_arquivo_grupo_de_risco(struct paciente value){
         printf(">----------------------------<\n");
         printf("Paciente do Grupo de Risco!\n");
         printf("Idade: %i\n", idade);
-        printf("Contem comorbidades: %s\n", value.comorbidade);
+        if(value.comorbidade == "\0"){
+            printf("Não contem comorbidades!");
+        }else{
+            printf("Contem comorbidades: %s\n", value.comorbidade);
+        }
         printf(">----------------------------<\n");
 
         FILE *file;
@@ -263,10 +276,10 @@ int cast_array_para_int(char *buff, char letra){
     int dia, mes;
 
     if(letra == 'd'){
-        sscanf(buff, "%d", &dia);
+        sscanf(buff, "%i", &dia);
         return dia;
     }else if(letra == 'm'){
-        sscanf(buff, "%d", &mes);
+        sscanf(buff, "%i", &mes);
         return mes;
     }
     return 0;

@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <stdio_ext.h>
 
-    /// Código feito por Vitor de Paula Santos.
     struct endereco{
         char rua[256];
         char bairro[256];

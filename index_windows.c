@@ -56,7 +56,7 @@ int main(void){
 
     switch(opcao){
     case 1:
-        system("clear"); // trocar esse comando quando for fazer a parte para o Windows
+        system("cls"); 
         printf("--- LOGIN ---\n");
         printf("Nome: ");
         pegar_entrada(agente.nome);
@@ -77,7 +77,7 @@ int main(void){
             scanf("%i", &opcao_d_login);
 
             while(opcao_d_login == 1){
-                system("clear");
+                system("cls");
                 printf("--- CADASTRO DO PACIENTE ---\n");
                 printf("Nome: ");
                 pegar_entrada(paciente.nome);
@@ -117,7 +117,7 @@ int main(void){
                 printf("CEP: ");
                 scanf("%i", &paciente.endereco_paciente.cep);
 
-                system("clear");
+                system("cls");
                 printf("Deseja Cadastrar mais alguma paciente?\n");
                 printf("---------------\n");
                 printf(" 1 - Sim\n");
@@ -165,7 +165,7 @@ int main(void){
 struct paciente cria_arquivo_paciente(struct paciente value){
     FILE *file;
     // gambiarra para criar o arquivo com o nome do paciente
-    char nome_do_arquivo[256] = "./databases/pacientes/";
+    char nome_do_arquivo[256] = ".\\databases\\pacientes\\";
     char txt[256] = ".txt";
     strcat(nome_do_arquivo, value.nome);
     strcat(nome_do_arquivo, txt);
@@ -207,7 +207,7 @@ struct paciente cria_arquivo_grupo_de_risco(struct paciente value){
 
         FILE *file;
         // gambiarra para criar o arquivo com o nome do paciente
-        char nome_do_arquivo[256] = "./databases/grupo_de_risco/";
+        char nome_do_arquivo[256] = ".\\databases\\grupo_de_risco\\";
         char txt[256] = ".txt";
         strcat(nome_do_arquivo, value.nome);
         strcat(nome_do_arquivo, txt);
@@ -228,12 +228,11 @@ struct paciente cria_arquivo_grupo_de_risco(struct paciente value){
 int verificar_agente(struct agente value){
     FILE *file;
 
-    char nome_do_arquivo[256] = "./databases/agentes/";
+    char nome_do_arquivo[256] = ".\\databases\\agentes\\";
     char txt[256] = ".txt";
     strcat(nome_do_arquivo, value.nome);
     strcat(nome_do_arquivo, txt);
     
-    printf("-------- %s", nome_do_arquivo);
     file = fopen(nome_do_arquivo, "r");
         if(file == NULL){
             printf("Agente não cadastrado!");
@@ -242,7 +241,6 @@ int verificar_agente(struct agente value){
         char frases[100];
         int i = 0;
         while(fgets(frases,100,file) != NULL){
-            printf("%i - %s\n", i, frases);
             if(i == 1){
                 if(*frases != *value.usuario){
                     printf("Usuário incorreto!\n");

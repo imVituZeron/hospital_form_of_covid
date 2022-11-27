@@ -234,7 +234,6 @@ int verificar_agente(struct agente value){
     strcat(nome_do_arquivo, value.nome);
     strcat(nome_do_arquivo, txt);
     
-    printf("-------- %s", nome_do_arquivo);
     file = fopen(nome_do_arquivo, "r");
         if(file == NULL){
             printf("Agente não cadastrado!");
@@ -243,7 +242,6 @@ int verificar_agente(struct agente value){
         char frases[100];
         int i = 0;
         while(fgets(frases,100,file) != NULL){
-            printf("%i - %s\n", i, frases);
             if(i == 1){
                 if(*frases != *value.usuario){
                     printf("Usuário incorreto!\n");
